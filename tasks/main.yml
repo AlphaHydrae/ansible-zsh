@@ -1,0 +1,16 @@
+# Yum
+- name: yum install zsh
+  yum: pkg=zsh state=installed
+  when: ansible_pkg_mgr == 'yum'
+
+# Aptitude
+- name: apt-get install zsh
+  apt: name=zsh state=installed
+  when: ansible_pkg_mgr == 'apt'
+
+# Homebrew
+- name: brew install zsh
+  homebrew: name=zsh state=installed
+  become: true
+  become_user: "{{ zsh_brew_user }}"
+  when: ansible_pkg_mgr == 'homebrew'
