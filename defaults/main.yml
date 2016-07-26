@@ -1,2 +1,2 @@
 ---
-zsh_brew_user: "{{ user | default(omit) }}"
+zsh_homebrew_user: "{{ homebrew_user | default(user) | default(omit) }}"

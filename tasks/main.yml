@@ -1,16 +1,22 @@
-# Yum
-- name: yum install zsh
-  yum: pkg=zsh state=installed
-  when: ansible_pkg_mgr == 'yum'
+---
 
 # Aptitude
-- name: apt-get install zsh
-  apt: name=zsh state=installed
+- name: Install ZSH (Aptitude)
+  apt: name=zsh state=present
   when: ansible_pkg_mgr == 'apt'
 
 # Homebrew
-- name: brew install zsh
-  homebrew: name=zsh state=installed
+- name: Install ZSH (Homebrew)
+  homebrew: name=zsh state=present
   become: true
-  become_user: "{{ zsh_brew_user }}"
+  become_user: "{{ zsh_homebrew_user }}"
   when: ansible_pkg_mgr == 'homebrew'
+
+# Yum
+- name: Install ZSH (Yum)
+  yum: pkg=zsh state=present
+  when: ansible_pkg_mgr == 'yum'
+
+# Other package managers
+- fail: msg="{{ ansible_pkg_mgr }} is not a supported package manager (Aptitude, Homebrew or Yum are supported)"
+  when: ansible_pkg_mgr != 'apt' and ansible_pkg_mgr != 'homebrew' and ansible_pkg_mgr != 'yum'
