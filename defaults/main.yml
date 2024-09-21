@@ -1,5 +1,6 @@
 ---
 zsh_bin: /usr/bin/zsh
-zsh_homebrew_bin: /usr/local/bin/zsh
+zsh_homebrew_bin: "{{ zsh_homebrew_dir }}/bin/zsh"
+zsh_homebrew_dir: "{{ '/opt/homebrew' if ansible_machine == 'arm64' else '/usr/local' }}"
 zsh_homebrew_user: "{{ homebrew_user | default(user) | default(omit) }}"
 zsh_user: "{{ user }}"
